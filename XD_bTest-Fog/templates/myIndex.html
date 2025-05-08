@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>获取天气信息</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=BmBgUXj94Pg18Kk1Z52DpfWXRv5Z2g3E"></script>
+    <script type="text/javascript">
+        function getWeather() {
+            var city = "北京"; // 替换为你想查询的城市名
+            var url = "http://api.map.baidu.com/weather/v1/?city="+encodeURIComponent(city)+"&output=json&ak=BmBgUXj94Pg18Kk1Z52DpfWXRv5Z2g3E";
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    console.log(response); // 天气信息
+                    // 处理response，展示天气信息
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

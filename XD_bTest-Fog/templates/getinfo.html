@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="../static/jQuery.js"> </script>
+<script>
+
+    var param = "";
+
+    $.get("http://ip-api.com/json/", function(param1){
+        alert(JSON.stringify(param1['lon']));
+        //     https://devapi.qweather.com/v7/weather/now?location=108.817,34.1247&key=b27e0f8b9678447c91a8edbcded8b055
+        // "https://devapi.qweather.com/v7/weather/now?location" + param1['lon'] + "," + param1['lat'] + "&key=b27e0f8b9678447c91a8edbcded8b055"
+        $.get("https://devapi.qweather.com/v7/weather/now?location=108.817,34.1247&key=b27e0f8b9678447c91a8edbcded8b055", function(param2){
+            alert(JSON.stringify(param2));
+    },"json")
+    },"json");
+
+
+</script>
+</body>
+</html>

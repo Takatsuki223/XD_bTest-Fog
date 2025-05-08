@@ -1,0 +1,269 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<title>雾霾定位探测系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Weather Report Widget template Responsive, Login form web template,Flat Pricing tables,Flat Drop downs  Sign up Web Templates, Flat Web Templates, Login sign up Responsive web template, SmartPhone Compatible web template, free web designs for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Custom Theme files -->
+<!--导入样式，使用了jquery中的wol.carousel中的owl.carousel.css主要负责轮播-->
+<link href="../static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="../static/css/owl.carousel.css" rel="stylesheet" type="text/css" media="all">
+<!-- //Custom Theme files -->
+<!-- js -->
+<!--导入jquery函数库-->
+<script src = "../static/js/jquery-2.2.3.min.js"></script> 
+<script src = "../static/js/owl.carousel.js"></script>
+<script>
+	$(document).ready(function() { 
+		$("#owl-demo").owlCarousel({ 
+		  autoPlay: 3000, //Set AutoPlay to 3 seconds
+	 
+		  items : 3,
+		  itemsDesktop : [768,3],
+		  itemsDesktopSmall : [414,4]
+	 
+		});
+	 
+	}); 
+</script>
+<!--导入echaets绘制温度折线图-->
+<script src = "../static/js/echart.js"></script>
+<script src="../static/js/skycons.js"></script>
+<!--设置字体-->
+<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'><!--web font-->
+</head>
+<body>
+	<!-- main -->
+	<div class="main-agileits">
+        <h1><b>雾霾定位探测系统</b></h1>
+		<div class="main-wthree-row"> 
+			<div class="agileinfo-text"> 
+                <h1>天气情况
+                </h1>
+				<div class="date">
+					<!-- Date-JavaScript -->
+					<script type="text/javascript">
+						var mydate=new Date()
+						var year=mydate.getYear()
+						if(year<1000)
+						year+=1900
+						var day=mydate.getDay()
+						var month=mydate.getMonth()
+						var daym=mydate.getDate()
+						if(daym<10)
+						daym="0"+daym
+						var dayarray=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六")
+						var montharray=new Array("一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月")
+						// document.write(""+dayarray[day]+" <br> "+daym+"  "+montharray[month]+"  "+year+"")
+                        document.write(year+" "+montharray[month]+" "+daym+"日"+"<br>" +dayarray[day]+"")
+					</script>
+					<!-- //Date-JavaScript -->
+				</div>
+				<h2 class="temp">&nbsp;</h2>
+				<h4 class="location"></h4>
+				<h6 class="weather"></h6>
+			</div>
+			<div class="w3layouts-slider">
+                <h1>空气情况
+                </h1>
+				<div id="owl-demo" class="owl-carousel owl-theme">
+					<div class="item agile-item">
+						<h6>空气质量</h6>
+                        <br>
+						<h6 class="quality"></h6>
+					</div> 
+					<div class="item agile-item">
+						<h6>质量指数</h6>
+                        <br>
+						<h6 class="aq"></h6>
+					</div> 
+					<div class="item agile-item">
+                        <h6>PM2.5</h6>
+                        <br>
+						<h6 class="pm25"></h6>
+					</div>  
+					<div class="item agile-item">
+                        <h6>二氧化硫</h6>
+                        <br>
+						<h6 class="so2"></h6>
+					</div> 
+					<div class="item agile-item">
+                        <h6>二氧化氮</h6>
+                        <br>
+						<h6 class="no2"></h6>
+					</div> 
+					<div class="item agile-item">
+                        <h6>一氧化碳</h6>
+                        <br>
+						<h6 class="co"></h6>
+					</div>  
+					<div class="item agile-item">
+                        <h6>臭氧</h6>
+                        <br>
+						<h6 class="o3"></h6>
+					</div> 
+				</div>
+				<script>
+					 var icons = new Skycons({"color": "#fff"}),
+						  list  = [
+							"clear-night","clear-day", "partly-cloudy-day",
+							"partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+							"fog"
+						  ],
+						  i;
+
+					  for(i = list.length; i--; )
+						icons.set(list[i], list[i]);
+
+					  icons.play();
+				</script>
+			</div>
+	<!-- //main -->
+	<!-- copyrights -->
+	</div>
+        <div id="weather" class="col-lg-7 col-md-12" style="height:400px"></div>
+            <div class="get_weather_info">
+                <script>
+                    $.get("http://ip-api.com/json/", function(basic){
+                        // 旧版本 https://free-api.heweather.net/s6/weather/now?location=" + basic['ip'] + "&key=b27e0f8b9678447c91a8edbcded8b055
+                        $.get("https://devapi.qweather.com/v7/weather/now?location=" + basic['lon'] + "," + basic['lat'] + "&key=faf1ba64a3774ec49b8621ceb9a205b9", function(param2){
+                           // $(".location").text(basic['city']);
+                            $(".temp").text(param2['now']['temp'] + '°');
+                            $(".weather").text(param2['now']['text']);
+                },"json")
+                    },"json");
+                    $(".location").text("西安");
+
+                    $.get("http://ip-api.com/json/", function(air){
+                        $.get("https://devapi.qweather.com/v7/air/now?location=" + air['lon'] + "," + air['lat'] + "&key=faf1ba64a3774ec49b8621ceb9a205b9", function(param2){
+                            $(".quality").text(param2['now']['category']);
+                            $(".aq").text(param2['now']['aqi']);
+                            $(".pm25").text(param2['now']['pm2p5']);
+                            $(".so2").text(param2['now']['so2']);
+                            $(".no2").text(param2['now']['no2']);
+                            $(".co").text(param2['now']['co']);
+                            $(".o3").text(param2['now']['o3']);
+
+                },"json")
+                    },"json");
+                </script>
+
+                <script>
+                    // 初始化天气折线图
+      var weather = echarts.init($('#weather').get(0));
+      option = {
+          title: {
+              text: '未来一周气温与湿度',
+              subtext: ''
+          },
+          tooltip: {
+              trigger: 'axis'
+          },
+          legend: {
+              data: ['气温', '湿度', '湿度']
+          },
+          xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: []
+          },
+          yAxis: {
+              scale:true, //纵坐标起始点根据最低值变化
+              type: 'value',
+              axisLabel: {
+                  formatter: '{value} ℃/%'
+              }
+          },
+          series: [{
+                  name: '气温',
+                  type: 'line',
+                  data: [],
+                  markPoint: {
+                      data: [{
+                              type: 'max',
+                              name: '最大值'
+                          }
+
+                      ]
+                  },
+                  markLine: {
+                      data: [{
+                          type: 'average',
+                          name: '平均值'
+                      }]
+                  }
+              },
+              {
+                  name: '湿度',
+                  type: 'line',
+                  data: [],
+                  markPoint: {
+                      data: [{
+                          type: 'min',
+                          name: '最小值'
+                      }]
+                  },
+                  markLine: {
+                      data: [{
+                              type: 'average',
+                              name: '平均值'
+                          },
+
+                      ]
+                  }
+              }
+          ]
+      };
+      weather.setOption(option);
+
+	//$.get("https://www.tianqiapi.com/free/week?appid=31457898&appsecret=LlKqP8a8",
+      //$.get("https://www.tianqiapi.com/free/week?appid=31457898&appsecret=LlKqP8a8",
+	  $.get("http://gfeljm.tianqiapi.com/api?unescape=1&version=v91&appid=22285754&appsecret=cm2fsgxr&ext=&cityid=",
+
+          function (res) {
+          console.log(res);
+             //给横坐标复赋值
+              option.xAxis.data = [res.data[0].date,
+                  res.data[1].date,
+                  res.data[2].date,
+                  res.data[3].date,
+                  res.data[4].date,
+                  res.data[5].date,
+                  res.data[6].date
+              ]
+              //由于温度返回的是xx℃ 而我们只需要数字 所以用parseInt截取数字
+              option.series[0].data = [(parseInt(res.data[0].tem)),
+                (parseInt(res.data[1].tem)),
+                (parseInt(res.data[2].tem)),
+                (parseInt(res.data[3].tem)),
+                (parseInt(res.data[4].tem)),
+                (parseInt(res.data[5].tem)),
+                (parseInt(res.data[6].tem))
+            ]
+
+              option.series[1].data = [parseInt(res.data[0].humidity),
+                  parseInt(res.data[1].humidity),
+                  parseInt(res.data[2].humidity),
+                  parseInt(res.data[3].humidity),
+                  parseInt(res.data[4].humidity),
+                  parseInt(res.data[5].humidity),
+                  parseInt(res.data[6].humidity)
+              ]
+
+
+
+              weather.setOption(option); // 使用刚指定的配置项和数据显示图表。
+          },
+      );
+                </script>
+            </div></div>
+</body>
+</html>
